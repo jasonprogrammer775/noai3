@@ -1,16 +1,40 @@
+/**
+ * App.tsx
+ * Main application component. Sets up global providers, routing, and the app header.
+ */
+import { Route, BrowserRouter as Router, Routes,  } from 'react-router-dom'
+import { Header } from './components/layout/Header'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { LearningPage } from './pages/LearningPage'
+import { AuthPage } from './pages/AuthPage'
+// ...import your pages/components
 
-import './App.css'
+// Initialize React Query client (for server state management)
+const queryClient = new QueryClient()
 
-function App() {
-
-
+export default function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-700 flex items-center justify-center">
-    <h1 className="text-5xl font-bold text-white drop-shadow-lg">
-      Tailwind + Vite + TypeScript is Working! 🚀
-    </h1>
-  </div>
+    // Provide React Query context to the app
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <Header
+          title="NoAI Flame"
+          subtitle="Your AI-Free Learning App"
+          links={[
+            { to: '/', label: 'Learning' },
+            { to: '/auth', label: 'Login / Signup' }
+            // ...other links
+          ]}
+        />
+        <main>
+          <Routes>
+            {/* Define your routes here */}
+             <Route path="/" element={<LearningPage />} /> 
+             <Route path="/auth" element={<AuthPage />} />
+
+          </Routes>
+        </main>
+      </Router>
+    </QueryClientProvider>
   )
 }
-
-export default App
