@@ -12,25 +12,49 @@ interface Profile {
 }
 
 export const ProfilePage = () => {
-    const user = useUser()
+  const user = useUser()
   const [profile, setProfile] = useState<Profile | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     if (!user) return
-    const fetchProfile = async () => {
+
+    const fetchOrCreateProfile = async () => {
       setIsLoading(true)
+      // Try to fetch the profile
       const { data, error } = await supabase
         .from("profiles")
         .select("*")
         .eq("id", user.id)
         .single()
-      if (error) setError(error.message)
-      else setProfile(data)
+
+      if (error) {
+        // If profile does not exist, create it
+        if (error.code === "PGRST116" || error.message.includes("No rows")) {
+          const { data: newProfile, error: insertError } = await supabase
+            .from("profiles")
+            .insert({
+              id: user.id,
+              username: user.email?.split("@")[0] ?? "",
+              display_name: user.user_metadata?.full_name ?? user.email?.split("@")[0] ?? "",
+              avatar_url: user.user_metadata?.avatar_url ?? null,
+              bio: ""
+            })
+            .select("*")
+            .single()
+          if (insertError) setError(insertError.message)
+          else setProfile(newProfile)
+        } else {
+          setError(error.message)
+        }
+      } else {
+        setProfile(data)
+      }
       setIsLoading(false)
     }
-    fetchProfile()
+
+    fetchOrCreateProfile()
   }, [user])
 
   if (!user) return <div className="p-4">You must be logged in to see your profile.</div>
