@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { LearningPage } from './pages/LearningPage'
 import { AuthPage } from './pages/AuthPage'
 import { ProfilePage } from './pages/ProfilePage'
+import { FeedPage } from './pages/FeedPage'
 // ...import your pages/components
 
 // Initialize React Query client (for server state management)
@@ -24,7 +25,8 @@ export default function App() {
           links={[
             { to: '/', label: 'Linkloop' },
             { to: '/auth', label: 'Login / Signup' },
-            { to: '/profile', label: 'Profile' }
+            { to: '/profile', label: 'Profile' },
+            { to: '/feed', label: 'Feed' },
             // ...other links
           ]}
         />
@@ -34,6 +36,7 @@ export default function App() {
              <Route path="/" element={<LearningPage />} /> 
              <Route path="/auth" element={<AuthPage />} />
              <Route path="/profile" element={<ProfilePage />} />
+             <Route path="/feed" element={<FeedPage />} />
           </Routes>
         </main>
       </Router>
