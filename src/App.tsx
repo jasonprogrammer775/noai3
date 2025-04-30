@@ -7,6 +7,7 @@ import { Header } from './components/layout/Header'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { LearningPage } from './pages/LearningPage'
 import { AuthPage } from './pages/AuthPage'
+import { ProfilePage } from './pages/ProfilePage'
 // ...import your pages/components
 
 // Initialize React Query client (for server state management)
@@ -22,7 +23,8 @@ export default function App() {
           subtitle="Your AI-Free Learning App"
           links={[
             { to: '/', label: 'Learning' },
-            { to: '/auth', label: 'Login / Signup' }
+            { to: '/auth', label: 'Login / Signup' },
+            { to: '/profile', label: 'Profile' }
             // ...other links
           ]}
         />
@@ -31,7 +33,7 @@ export default function App() {
             {/* Define your routes here */}
              <Route path="/" element={<LearningPage />} /> 
              <Route path="/auth" element={<AuthPage />} />
-
+             <Route path="/profile" element={<ProfilePage />} />
           </Routes>
         </main>
       </Router>
