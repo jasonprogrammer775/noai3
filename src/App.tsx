@@ -19,10 +19,10 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <Router>
         <Header
-          title="NoAI Flame"
-          subtitle="Your AI-Free Learning App"
+          title="Linkloop"
+          subtitle="Network"
           links={[
-            { to: '/', label: 'Learning' },
+            { to: '/', label: 'Linkloop' },
             { to: '/auth', label: 'Login / Signup' },
             { to: '/profile', label: 'Profile' }
             // ...other links
