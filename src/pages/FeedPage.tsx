@@ -89,7 +89,9 @@ export const FeedPage = () => {
       ) : posts && posts.length > 0 ? (
         <ul className="space-y-4">
           {posts.map(post => {
+          
             const author = post.profiles?.[0]
+            
             return (
               <li key={post.id} className="border rounded p-4 bg-white shadow-sm">
                 <div className="text-sm text-gray-600 mb-1">
